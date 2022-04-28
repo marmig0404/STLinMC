@@ -15,6 +15,8 @@ def build_voxels(voxels, server_ip, server_port=4711):
         server_ip (str): ip of minecraft server running raspberry juice (URL or IPv4)
         server_port (int, optional): server port. defaults to 4711.
     """
+
+    # establish connection to server and get player position
     conn = connection.Connection(server_ip, server_port)
     mc = minecraft.Minecraft(conn)
     try:
@@ -22,7 +24,11 @@ def build_voxels(voxels, server_ip, server_port=4711):
     except connection.RequestError:
         print("No valid player to reference, using (0,0,0)")
         x, y, z = 0, 0, 0
+
+    # set blocks for each voxel
     for layer_index, layer in enumerate(voxels):
+
+        print(f"Sending layer {layer_index+1}/{len(voxels)}... ", end='')
         for row_index, row in enumerate(layer):
             for column_index, column in enumerate(row):
                 xc = x + column_index
@@ -30,5 +36,6 @@ def build_voxels(voxels, server_ip, server_port=4711):
                 zc = z + row_index
                 if column == 1:
                     mc.setBlock(xc, yc, zc, block.COBBLESTONE.id)
-                else:
+                elif column == 0:
                     mc.setBlock(xc, yc, zc, block.AIR.id)
+        print("Sent!")

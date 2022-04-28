@@ -23,5 +23,5 @@ def import_stl_as_voxels(input_file_path):
     org_mesh = np.hstack(
         (mesh_obj.v0[:, np.newaxis], mesh_obj.v1[:, np.newaxis], mesh_obj.v2[:, np.newaxis]))
     meshes.append(org_mesh)
-    vol = convert_meshes(meshes, resolution=100, parallel=False)[0]
+    vol = convert_meshes(meshes, resolution=100, parallel=True)[0]
     return vol

@@ -2,7 +2,7 @@ import unittest
 from stlinmc import voxel
 
 
-class TestMain(unittest.TestCase):
+class TestVoxel(unittest.TestCase):
     def test_voxel(self):
         # https://commons.wikimedia.org/wiki/File:Stanford_Bunny.stl
         voxel.import_stl_as_voxels('data/Stanford_Bunny.stl')
