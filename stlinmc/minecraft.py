@@ -1,9 +1,20 @@
+"""
+# minecraft.py
+# this module interacts with a Raspberry Juice server
+"""
+
 from mcpi import block, connection, minecraft
-from .voxel import import_stl_as_voxels
 
 
 def build_voxels(voxels, server_ip, server_port=4711):
+    """sends build commands for voxels on a server
 
+    Args:
+        voxels (np.nDArray[int8]): a set of voxels in a 3D array,
+                                   0 and 1 indicate air and block respectively
+        server_ip (str): ip of minecraft server running raspberry juice (URL or IPv4)
+        server_port (int, optional): server port. defaults to 4711.
+    """
     conn = connection.Connection(server_ip, server_port)
     mc = minecraft.Minecraft(conn)
     try:
@@ -14,7 +25,7 @@ def build_voxels(voxels, server_ip, server_port=4711):
     for layer_index, layer in enumerate(voxels):
         for row_index, row in enumerate(layer):
             for column_index, column in enumerate(row):
-                xc = x+column_index
+                xc = x + column_index
                 yc = y + layer_index
                 zc = z + row_index
                 if column == 1:

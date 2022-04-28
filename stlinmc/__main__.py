@@ -7,7 +7,17 @@ from stlinmc import minecraft
 from stlinmc import voxel
 
 
-def file_choices(parser, choices, fname):
+def valid_file(parser, choices, fname):
+    """function to validate file input
+
+    Args:
+        parser (ArgumentParser): ArgumentParser to throw argument error
+        choices (tuple[str]): a tuple of file extensions to allow
+        fname (str): the file name to validate
+
+    Returns:
+        str: the validated file name
+    """
     ext = os.path.splitext(fname)[1]
     if ext == '' or ext.lower() not in choices:
         if len(choices) == 1:
@@ -18,6 +28,15 @@ def file_choices(parser, choices, fname):
 
 
 def valid_ip(parser, ipin):
+    """function to validate ip input
+
+    Args:
+        parser (ArgumentParser): ArgumentParser to throw argument error
+        ipin (str): the ip address to validate
+
+    Returns:
+        str: the validated ip address
+    """
     valid = False
     try:
         validators.ip_address.ipv4(ipin)
@@ -36,10 +55,15 @@ def valid_ip(parser, ipin):
 
 
 def run_parser():
+    """function to parse arguments
+
+    Returns:
+        Namespace: populated namespace from arguments
+    """
     parser = argparse.ArgumentParser(description='Import STL into Minecraft')
     parser.add_argument(
         'input',
-        type=lambda s: file_choices(parser, ('.stl'), s),
+        type=lambda s: valid_file(parser, ('.stl'), s),
         help='Input STL file')
     parser.add_argument(
         'server',
@@ -55,6 +79,8 @@ def run_parser():
 
 
 def main():
+    """build stl file in specified server
+    """
     args = run_parser()
     print(f"Generating voxels from {args.input}")
     voxels = voxel.import_stl_as_voxels(args.input)
