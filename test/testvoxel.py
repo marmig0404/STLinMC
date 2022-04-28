@@ -1,6 +1,7 @@
 import unittest
 from stlinmc import voxel
 
+
 class TestMain(unittest.TestCase):
     def test_voxel():
         # https://commons.wikimedia.org/wiki/File:Stanford_Bunny.stl
