@@ -73,6 +73,12 @@ def run_parser():
         '--port',
         type=int,
         help='Raspberry Juice Port')
+    parser.add_argument(
+        '--parallel',
+        dest='parallel',
+        action='store_true',
+        help='Disable parallel processing')
+    parser.set_defaults(parallel=False)
     parser.set_defaults(port=4711)
     args = parser.parse_args()
     return args
@@ -83,9 +89,9 @@ def main():
     """
     args = run_parser()
     print(f"Generating voxels from {args.input}")
-    voxels = voxel.import_stl_as_voxels(args.input)
+    voxels = voxel.import_stl_as_voxels(args.input, args.parallel)
     print(f"Sending voxels to {args.server}:{args.port}")
-    minecraft.build_voxels(voxels, args.server, args.port)
+    minecraft.build_voxels(voxels, args.server, args.port, args.parallel)
     print("Sent build commands to server, Done!")
 
 

@@ -8,7 +8,7 @@ from stltovoxel import convert_meshes
 import numpy as np
 
 
-def import_stl_as_voxels(input_file_path):
+def import_stl_as_voxels(input_file_path, parallel):
     """imports an stl file into a voxel array
 
     Args:
@@ -23,5 +23,5 @@ def import_stl_as_voxels(input_file_path):
     org_mesh = np.hstack(
         (mesh_obj.v0[:, np.newaxis], mesh_obj.v1[:, np.newaxis], mesh_obj.v2[:, np.newaxis]))
     meshes.append(org_mesh)
-    vol = convert_meshes(meshes, resolution=100, parallel=True)[0]
+    vol = convert_meshes(meshes, resolution=100, parallel=parallel)[0]
     return vol

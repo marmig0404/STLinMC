@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name='stl-in-mc',
-    version='0.0.2',
+    version='0.1.0',
     description='Import STL into Minecraft',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
@@ -15,7 +15,7 @@ setup(
     url='https://github.com/marmig0404/stl-in-mc',
     download_url='https://github.com/marmig0404/stl-in-mc/releases',
     install_requires=['numpy', 'numpy-stl',
-                      'validators', 'mcpi', 'stl-to-voxel'],
+                      'validators', 'mcpi', 'stl-to-voxel', 'joblib'],
     packages=['stlinmc'],
     python_requires='>=3',
     zip_safe=False,

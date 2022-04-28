@@ -4,9 +4,11 @@
 """
 
 from mcpi import block, connection, minecraft
+import multiprocessing
+from joblib import Parallel, delayed
 
 
-def build_voxels(voxels, server_ip, server_port=4711):
+def build_voxels(voxels, server_ip, server_port=4711, parallel=False):
     """sends build commands for voxels on a server
 
     Args:
@@ -26,16 +28,24 @@ def build_voxels(voxels, server_ip, server_port=4711):
         x, y, z = 0, 0, 0
 
     # set blocks for each voxel
-    for layer_index, layer in enumerate(voxels):
+    if not parallel:
+        for layer_index, layer in enumerate(voxels):
+            print(f"Sending layer {layer_index+1}/{len(voxels)}... ", end='')
+            build_layer(mc, layer, layer_index, x, y, z)
+            print("Sent!")
+    else:
+        num_cores = multiprocessing.cpu_count()
+        Parallel(n_jobs=min(num_cores,4), prefer="threads")(
+            delayed(build_layer)(mc, layer, layer_index, x, y, z) for layer_index, layer in enumerate(voxels))
 
-        print(f"Sending layer {layer_index+1}/{len(voxels)}... ", end='')
-        for row_index, row in enumerate(layer):
-            for column_index, column in enumerate(row):
-                xc = x + column_index
-                yc = y + layer_index
-                zc = z + row_index
-                if column == 1:
-                    mc.setBlock(xc, yc, zc, block.COBBLESTONE.id)
-                elif column == 0:
-                    mc.setBlock(xc, yc, zc, block.AIR.id)
-        print("Sent!")
+
+def build_layer(mc, layer, layer_height, x, y, z):
+    for row_index, row in enumerate(layer):
+        for column_index, column in enumerate(row):
+            xc = x + column_index
+            yc = y + layer_height
+            zc = z + row_index
+            if column == 1:
+                mc.setBlock(xc, yc, zc, block.COBBLESTONE.id)
+            elif column == 0:
+                mc.setBlock(xc, yc, zc, block.AIR.id)
