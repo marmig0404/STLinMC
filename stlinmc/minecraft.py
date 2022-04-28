@@ -35,7 +35,7 @@ def build_voxels(voxels, server_ip, server_port=4711, parallel=False):
             print("Sent!")
     else:
         num_cores = multiprocessing.cpu_count()
-        Parallel(n_jobs=min(num_cores,4), prefer="threads")(
+        Parallel(n_jobs=min(num_cores, 4), prefer="threads")(
             delayed(build_layer)(mc, layer, layer_index, x, y, z) for layer_index, layer in enumerate(voxels))
 
 
