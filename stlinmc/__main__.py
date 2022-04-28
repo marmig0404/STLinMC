@@ -1,12 +1,14 @@
 import argparse
-import validators
 import os
-from .voxel import import_stl_as_voxels
-from .minecraft import build_voxels
+
+import validators
+
+from stlinmc import minecraft
+from stlinmc import voxel
 
 
 def file_choices(parser, choices, fname):
-    filename, ext = os.path.splitext(fname)
+    ext = os.path.splitext(fname)[1]
     if ext == '' or ext.lower() not in choices:
         if len(choices) == 1:
             parser.error(f'{fname} doesn\'t end with {choices}')
@@ -55,9 +57,9 @@ def run_parser():
 def main():
     args = run_parser()
     print(f"Generating voxels from {args.input}")
-    voxels = import_stl_as_voxels(args.input)
+    voxels = voxel.import_stl_as_voxels(args.input)
     print(f"Sending voxels to {args.server}:{args.port}")
-    build_voxels(voxels, args.server, args.port)
+    minecraft.build_voxels(voxels, args.server, args.port)
     print("Sent build commands to server, Done!")
 
 
