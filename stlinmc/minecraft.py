@@ -4,7 +4,7 @@
 """
 
 from mcpi import block
-from mcpi.connection import Connection
+from mcpi.connection import Connection, RequestError
 from mcpi.minecraft import Minecraft
 from multiprocessing import cpu_count
 from joblib import Parallel, delayed
@@ -25,7 +25,7 @@ def build_voxels(voxels, server_ip, server_port=4711, parallel=False):
     mc = Minecraft(conn)
     try:
         x, y, z = mc.player.getTilePos()
-    except connection.RequestError:
+    except RequestError:
         print("No valid player to reference, using (0,0,0)")
         x, y, z = 0, 0, 0
 
