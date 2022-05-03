@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name='stl-in-mc',
-    version='0.1.0',
+    version='0.1.1',
     description='Import STL into Minecraft',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
