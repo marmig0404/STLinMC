@@ -5,8 +5,8 @@ name: Python Package
 
 on:
   push:
-    branches:
-      - '**'        # matches every branch
+    tags: # on tags with versions
+      - "v*.*.*"
   pull_request:
     branches: [ master ]
 
