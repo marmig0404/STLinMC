@@ -1,9 +1,3 @@
-# stl-in-mc
-Import STL files into Minecraft via Raspberry Juice server plugin
+# stl-in-mc - page
+Page for stl-in-mc on the web
 
-## Usage
-### Command line
-```
-pip install stl-in-mc
-stlinmc input.stl example.minecraft.server --port 4711
-```
