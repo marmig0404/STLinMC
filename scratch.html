@@ -36,11 +36,17 @@
 
         <div id="output"></div>
 
+        <py-env>
+        - stl-in-mc
+        </py-env>
+
         <py-script>
 import base64
 import pyodide
+import io
 
 from js import btoa, FileReader, Image
+from stlinmc import voxel, minecraft
 
 # Handle end of loading
 
@@ -63,13 +69,17 @@ def reader_handler(event):
   """Event listener for FileReader load"""
   img_data = event.target.result
   print(img_data)
+  stl_file = io.StringIO(img_data)
+  print(type(stl_file))
+  #voxels = voxel.import_stl_as_voxels(stl_file, False)
+  #print(type(voxels))
 
 def upload_handler(event):
   """Event listener/top-level controller to handle changing of #upload input"""
   reader = FileReader.new()
   reader.addEventListener("load", pyodide.create_proxy(reader_handler))
   target_file = event.target.files.item(0)  # pyodide.JsProxy obj's not subscriptable
-  reader.readAsBinaryString(target_file)
+  reader.readAsText(target_file)
 
 def create_and_display_img(img_data):
   # Create image from binary data
