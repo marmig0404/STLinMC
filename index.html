@@ -37,7 +37,7 @@
         <div id="output"></div>
 
         <py-env>
-        - stl-in-mc
+        - stl-in-mc==0.1.4
         </py-env>
 
         <py-script>
@@ -47,6 +47,7 @@ import io
 
 from js import btoa, FileReader, Image
 from stlinmc import voxel, minecraft
+import numpy as np
 
 # Handle end of loading
 
@@ -57,8 +58,7 @@ form.style.display = "block"
 
 def write_output(val):
   """Write something to `#output` div"""
-  output = document.getElementById("output")
-  output.textContent = str(val)
+  
 
 def get_upload():
   """Load `input#upload` instance from DOM"""
@@ -67,12 +67,11 @@ def get_upload():
 
 def reader_handler(event):
   """Event listener for FileReader load"""
-  img_data = event.target.result
-  print(img_data)
-  stl_file = io.StringIO(img_data)
-  print(type(stl_file))
-  #voxels = voxel.import_stl_as_voxels(stl_file, False)
-  #print(type(voxels))
+  data = event.target.result
+  v = voxel.import_text_as_voxels(io.StringIO(data), False)
+  output = document.getElementById("output")
+  output.textContent = type(v)
+  minecraft.build_voxels(v, "srv.martinmiglio.dev", 4711, False)
 
 def upload_handler(event):
   """Event listener/top-level controller to handle changing of #upload input"""
@@ -80,15 +79,6 @@ def upload_handler(event):
   reader.addEventListener("load", pyodide.create_proxy(reader_handler))
   target_file = event.target.files.item(0)  # pyodide.JsProxy obj's not subscriptable
   reader.readAsText(target_file)
-
-def create_and_display_img(img_data):
-  # Create image from binary data
-  img = Image.new()
-  img.src = "data:image/jpeg;base64," + btoa(img_data)
-
-  # Append to container
-  container = document.getElementById("container")
-  container.append(img)
 
 upload = get_upload()
 upload.addEventListener("change", pyodide.create_proxy(upload_handler))
