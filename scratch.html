@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>STL in MC</title>
+    <!-- Styles //-->
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+</head>
+
+<body>
+    <!-- Header //-->
+    <header>
+        <h1>STL in MC</h1>
+    </header>
+
+    <main>
+
+
+        <div id="upload_form">
+            <fieldset>
+                <legend>Upload a File (.stl)</legend>
+                <ol>
+                    <li>
+                        <label for="upload">File Upload:</label>
+                        <input type="file" name="upload" id="upload" accept=".stl">
+                    </li>
+                </ol>
+            </fieldset>
+        </div>
+
+        <div id="output"></div>
+
+        <py-script>
+import base64
+import pyodide
+
+from js import btoa, FileReader, Image
+
+# Handle end of loading
+
+form = document.getElementById("upload_form")
+form.style.display = "block"
+
+# <input> event handler
+
+def write_output(val):
+  """Write something to `#output` div"""
+  output = document.getElementById("output")
+  output.textContent = str(val)
+
+def get_upload():
+  """Load `input#upload` instance from DOM"""
+  upload = document.getElementById("upload")
+  return upload
+
+def reader_handler(event):
+  """Event listener for FileReader load"""
+  img_data = event.target.result
+  print(img_data)
+
+def upload_handler(event):
+  """Event listener/top-level controller to handle changing of #upload input"""
+  reader = FileReader.new()
+  reader.addEventListener("load", pyodide.create_proxy(reader_handler))
+  target_file = event.target.files.item(0)  # pyodide.JsProxy obj's not subscriptable
+  reader.readAsBinaryString(target_file)
+
+def create_and_display_img(img_data):
+  # Create image from binary data
+  img = Image.new()
+  img.src = "data:image/jpeg;base64," + btoa(img_data)
+
+  # Append to container
+  container = document.getElementById("container")
+  container.append(img)
+
+upload = get_upload()
+upload.addEventListener("change", pyodide.create_proxy(upload_handler))
+print(upload)
+
+        </py-script>
+
+
+        <!-- Output -->
+
+        <div id="container">
+
+        </div>
+
+
+        <!-- End output -->
+    </main>
+    </div>
+    <!-- Scripts //-->
+</body>
+
+</html>
