@@ -29,6 +29,7 @@ def import_stl_as_voxels(input_file_path, parallel):
     vol = convert_meshes(meshes, resolution=100, parallel=parallel)[0]
     return vol
 
+
 def import_text_as_voxels(input_text, parallel):
     """imports an stl file into a voxel array
 
