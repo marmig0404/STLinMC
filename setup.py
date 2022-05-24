@@ -1,11 +1,19 @@
+import os
 from setuptools import setup
 
 with open("README.md", "r", encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
 
+# get github workflow env vars
+try:
+    version = (os.environ['GIT_TAG_NAME']).replace('v', '')
+except KeyError:
+    print('Defaulting to 0.0.0')
+    version = '0.0.0'
+
 setup(
     name='stl-in-mc',
-    version='0.1.4',
+    version=version,
     description='Import STL into Minecraft',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
