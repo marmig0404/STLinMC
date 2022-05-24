@@ -3,8 +3,7 @@ import os
 
 import validators
 
-from stlinmc import minecraft
-from stlinmc import voxel
+from stlinmc import minecraft, voxel
 
 
 def valid_file(parser, choices, fname):

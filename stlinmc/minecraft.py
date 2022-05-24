@@ -3,11 +3,12 @@
 # this module interacts with a Raspberry Juice server
 """
 
+from multiprocessing import cpu_count
+
+from joblib import Parallel, delayed
 from mcpi import block
 from mcpi.connection import Connection, RequestError
 from mcpi.minecraft import Minecraft
-from multiprocessing import cpu_count
-from joblib import Parallel, delayed
 
 
 def build_voxels(voxels, server_ip, server_port=4711, parallel=False):

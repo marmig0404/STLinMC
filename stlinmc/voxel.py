@@ -3,9 +3,9 @@
 # this module creates a voxel array from an stl
 """
 
+from numpy import hstack, newaxis
 from stl.mesh import Mesh
 from stltovoxel import convert_meshes
-from numpy import hstack, newaxis
 
 
 def import_stl_as_voxels(input_file_path, parallel):
