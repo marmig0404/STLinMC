@@ -8,7 +8,7 @@ mcpi==1.2.1
 numpy==1.23.0
 numpy-stl==2.17.1
 packaging==21.3
-Pillow==9.1.1
+Pillow==9.2.0
 pyparsing==3.0.9
 python-dateutil==2.8.2
 python-utils==3.3.3
