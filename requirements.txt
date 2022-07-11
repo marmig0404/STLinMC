@@ -5,7 +5,7 @@ joblib==1.1.0
 kiwisolver==1.4.3
 matplotlib==3.5.2
 mcpi==1.2.1
-numpy==1.23.0
+numpy==1.23.1
 numpy-stl==2.17.1
 packaging==21.3
 Pillow==9.2.0
