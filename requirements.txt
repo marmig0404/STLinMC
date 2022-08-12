@@ -3,7 +3,7 @@ decorator==5.1.1
 fonttools==4.34.4
 joblib==1.1.0
 kiwisolver==1.4.4
-matplotlib==3.5.2
+matplotlib==3.5.3
 mcpi==1.2.1
 numpy==1.23.1
 numpy-stl==2.17.1
