@@ -1,5 +1,9 @@
-import argparse
+"""
+stlinmc.__main__: executed when stlinmc directory is called as script.
+"""
+
 import os
+from argparse import ArgumentParser, Namespace
 
 import validators
 
@@ -18,15 +22,15 @@ def valid_file(parser, choices, fname):
         str: the validated file name
     """
     ext = os.path.splitext(fname)[1]
-    if ext == '' or ext.lower() not in choices:
+    if ext == "" or ext.lower() not in choices:
         if len(choices) == 1:
-            parser.error(f'{fname} doesn\'t end with {choices}')
+            parser.error(f"{fname} doesn't end with {choices}")
         else:
-            parser.error(f'{fname} doesn\'t end with one of {choices}')
+            parser.error(f"{fname} doesn't end with one of {choices}")
     return fname
 
 
-def valid_ip(parser, ipin):
+def valid_ip(parser: ArgumentParser, ipin):
     """function to validate ip input
 
     Args:
@@ -36,56 +40,42 @@ def valid_ip(parser, ipin):
     Returns:
         str: the validated ip address
     """
-    valid = False
-    try:
+    if not (
         validators.ip_address.ipv4(ipin)
-        valid = True
-    except validators.ValidationFailure:
-        valid = False
-    try:
-        validators.url(ipin)
-        valid = True
-    except validators.ValidationFailure:
-        valid = False
-    if valid:
-        return ipin
-    else:
-        parser.error(f'\'{ipin}\' is not a valid IP address or URL')
+        or validators.ip_address.ipv6(ipin)
+        or validators.url(ipin)
+    ):
+        parser.error(f"{ipin} is not a valid ip address")
+    return ipin
 
 
-def run_parser():
+def run_parser() -> Namespace:
     """function to parse arguments
 
     Returns:
         Namespace: populated namespace from arguments
     """
-    parser = argparse.ArgumentParser(description='Import STL into Minecraft')
+    parser = ArgumentParser(description="Import STL into Minecraft")
     parser.add_argument(
-        'input',
-        type=lambda s: valid_file(parser, ('.stl'), s),
-        help='Input STL file')
+        "input", type=lambda s: valid_file(parser, (".stl"), s), help="Input STL file"
+    )
     parser.add_argument(
-        'server',
-        type=lambda s: valid_ip(parser, s),
-        help='Minecraft Server IP')
+        "server", type=lambda s: valid_ip(parser, s), help="Minecraft Server IP"
+    )
+    parser.add_argument("--port", type=int, help="Raspberry Juice Port")
     parser.add_argument(
-        '--port',
-        type=int,
-        help='Raspberry Juice Port')
-    parser.add_argument(
-        '--parallel',
-        dest='parallel',
-        action='store_true',
-        help='Disable parallel processing')
+        "--parallel",
+        dest="parallel",
+        action="store_true",
+        help="Disable parallel processing",
+    )
     parser.set_defaults(parallel=False)
     parser.set_defaults(port=4711)
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def main():
-    """build stl file in specified server
-    """
+    """build stl file in specified server"""
     args = run_parser()
     print(f"Generating voxels from {args.input}")
     voxels = voxel.import_stl_as_voxels(args.input, args.parallel)
@@ -94,5 +84,5 @@ def main():
     print("Sent build commands to server, Done!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

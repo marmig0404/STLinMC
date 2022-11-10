@@ -25,29 +25,38 @@ def build_voxels(voxels, server_ip, server_port=4711, parallel=False):
     conn = Connection(server_ip, server_port)
     mc = Minecraft(conn)
     try:
-        x, y, z = mc.player.getTilePos()
+        pos = mc.player.getTilePos()
     except RequestError:
         print("No valid player to reference, using (0,0,0)")
-        x, y, z = 0, 0, 0
+        pos = (0, 0, 0)
 
     # set blocks for each voxel
     if not parallel:
         for layer_index, layer in enumerate(voxels):
-            print(f"Sending layer {layer_index+1}/{len(voxels)}... ", end='')
-            build_layer(mc, layer, layer_index, x, y, z)
+            print(f"Sending layer {layer_index+1}/{len(voxels)}... ", end="")
+            build_layer(mc, layer, layer_index, pos)
             print("Sent!")
     else:
         num_cores = cpu_count()
-        Parallel(
-            n_jobs=min(num_cores, 4),
-            prefer="threads"
-        )(
-            delayed(build_layer)
-            (mc, layer, layer_index, x, y, z) for layer_index, layer in enumerate(voxels)
+        Parallel(n_jobs=min(num_cores, 4), prefer="threads")(
+            delayed(build_layer)(mc, layer, layer_index, pos)
+            for layer_index, layer in enumerate(voxels)
         )
 
 
-def build_layer(mc, layer, layer_height, x, y, z):
+def build_layer(mc, layer, layer_height, position):
+    """builds a layer of voxels
+
+    Args:
+        mc (Minecraft): minecraft connection
+        layer (np.nDArray[int8]): a 2D array of voxels
+        layer_height (int): height of layer
+        position (tuple[int]): x, y, z position of player
+
+    Returns:
+        None
+    """
+    x, y, z = position
     for row_index, row in enumerate(layer):
         for column_index, column in enumerate(row):
             xc = x + column_index
