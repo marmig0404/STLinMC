@@ -1,0 +1,76 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+name = "stl-in-mc"
+packages = [
+    { include = "stlinmc" },
+]
+version = "v0.0.0"
+description = "Import STL files into Minecraft"
+readme = "README.md"
+authors = ["Martin Miglio <code@martinmiglio.dev>"]
+license = "MIT"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+keywords = ["memu", "memuc", "wrapper", "api"]
+repository = "https://github.com/marmig0404/stl-in-mc"
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+poetry = "^1.2.2"
+numpy = "^1.22"
+numpy-stl = "^2.17"
+validators = "^0.19"
+mcpi = "^1.2"
+stl-to-voxel = "^0.9"
+joblib = "^1.1"
+
+
+[tool.poetry.scripts]
+stlinmc = "stlinmc.__main__:main"
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+
+
+[tool.pylint.main]
+ignore = ["docs/source"]
+py-version = "3.10"
+suggestion-mode = true
+disable = [
+    "C0301", # line-too-long
+    ]
+
