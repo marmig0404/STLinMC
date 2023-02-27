@@ -1303,14 +1303,14 @@ six = ">=1.5"
 
 [[package]]
 name = "python-utils"
-version = "3.5.1"
+version = "3.5.2"
 description = "Python Utils is a module with some convenient utilities not included with the standard Python install"
 category = "main"
 optional = false
 python-versions = ">3.6.0"
 files = [
-    {file = "python-utils-3.5.1.tar.gz", hash = "sha256:3f2d41cb4b44785057c340810d43f3fe587b430f7bbdc5e230f3bf19751dad9e"},
-    {file = "python_utils-3.5.1-py2.py3-none-any.whl", hash = "sha256:fbe7ca2ee8f51613c76768fc7c24df683fa5ac28eed5a2769a942d513fc0ab65"},
+    {file = "python-utils-3.5.2.tar.gz", hash = "sha256:68198854fc276bc4b2403b261703c218e01ef564dcb072a7096ed9ea7aa5130c"},
+    {file = "python_utils-3.5.2-py2.py3-none-any.whl", hash = "sha256:8bfefc3430f1c48408fa0e5958eee51d39840a5a987c2181a579e99ab6fe5ca6"},
 ]
 
 [package.extras]
