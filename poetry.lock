@@ -1578,21 +1578,21 @@ files = [
 
 [[package]]
 name = "stl-to-voxel"
-version = "0.9.2"
+version = "0.9.3"
 description = "Turn STL files into voxels, images, and videos"
 category = "main"
 optional = false
-python-versions = ">=3"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "stl-to-voxel-0.9.2.tar.gz", hash = "sha256:8b9fabfb99ae91f277b2a485a9d02b631690ac9e1137f75c0313671ced20eeea"},
-    {file = "stl_to_voxel-0.9.2-py3-none-any.whl", hash = "sha256:0d60cd7cf9d68d9386282086813242b2c720fb8ed54fea2c4fc945a9fe5ae112"},
+    {file = "stl_to_voxel-0.9.3-py3-none-any.whl", hash = "sha256:0cbc2995f59ff9ef4988c76ac87631917736feae1094706d8b88048dad3294f8"},
+    {file = "stl_to_voxel-0.9.3.tar.gz", hash = "sha256:b8a48957e42033785b232a9b000fdeff668a23dbefd53ce39517ef7b9ff6a905"},
 ]
 
 [package.dependencies]
-matplotlib = "*"
-numpy = "*"
-numpy-stl = "*"
-Pillow = "*"
+matplotlib = ">=3.6,<4.0"
+numpy = ">=1.13,<2.0"
+numpy-stl = ">=2.17,<3.0"
+Pillow = ">=9.3,<10.0"
 
 [[package]]
 name = "tomli"
