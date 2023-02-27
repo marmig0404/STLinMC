@@ -951,19 +951,19 @@ files = [
 
 [[package]]
 name = "numpy-stl"
-version = "2.17.1"
+version = "3.0.0"
 description = "Library to make reading, writing and modifying both binary and ascii STL files easy."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">3.6.0"
 files = [
-    {file = "numpy-stl-2.17.1.tar.gz", hash = "sha256:36c920192f445dd57f091a63629bdda5a9274d47513a33ac2efad12737394b7a"},
-    {file = "numpy_stl-2.17.1-py3-none-any.whl", hash = "sha256:c75d4df9cecff7de7bf1e7148dc011c0f4acf9d1c008ef664185c8ecab94ee99"},
+    {file = "numpy-stl-3.0.0.tar.gz", hash = "sha256:578b78eacb0529ac9aba2f17dcc363d58c7c3c5708710c18f8c1e9965f2e81ac"},
+    {file = "numpy_stl-3.0.0-py3-none-any.whl", hash = "sha256:44d56dec3b409b73f7126089ece859d0213d302e39c2375496e64f6dc574347c"},
 ]
 
 [package.dependencies]
 numpy = "*"
-python-utils = ">=1.6.2"
+python-utils = ">=3.4.5"
 
 [[package]]
 name = "packaging"
@@ -1822,4 +1822,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "f9d943d1e1ebdf4c10a0a53f7c22ce281f5f1c53db5589dd905925b849888842"
+content-hash = "55cb1dc31483820ac78d2e91e828f6cd433d4e3f12d6cee5d3c931c03bdc7068"
