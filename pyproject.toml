@@ -23,7 +23,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 keywords = ["memu", "memuc", "wrapper", "api"]
-repository = "https://github.com/marmig0404/stl-in-mc"
+repository = "https://github.com/martinmiglio/stl-in-mc"
 
 
 [tool.poetry.dependencies]
