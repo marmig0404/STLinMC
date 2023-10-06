@@ -3,9 +3,8 @@
 # this module interacts with a Raspberry Juice server
 """
 
-from multiprocessing import cpu_count
+from concurrent.futures import ThreadPoolExecutor
 
-from joblib import Parallel, delayed
 from mcpi import block
 from mcpi.connection import Connection, RequestError
 from mcpi.minecraft import Minecraft
@@ -37,14 +36,14 @@ def build_voxels(voxels, server_ip, server_port=4711, parallel=False):
             build_layer(mc, layer, layer_index, pos)
             print("Sent!")
     else:
-        num_cores = cpu_count()
-        Parallel(n_jobs=min(num_cores, 4), prefer="threads")(
-            delayed(build_layer)(mc, layer, layer_index, pos)
-            for layer_index, layer in enumerate(voxels)
-        )
+        with ThreadPoolExecutor(
+            thread_name_prefix="voxel_builder", max_workers=len(voxels)
+        ) as executor:
+            for layer_index, layer in enumerate(voxels):
+                executor.submit(build_layer, mc, layer, layer_index, pos)
 
 
-def build_layer(mc, layer, layer_height, position):
+def build_layer(mc: Minecraft, layer, layer_height, position):
     """builds a layer of voxels
 
     Args:
